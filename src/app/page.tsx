@@ -1,101 +1,200 @@
-import Image from "next/image";
+import Header from "@components/layout/Header";
+import Footer from "@components/layout/Footer";
+import Link from "next/link";
 
-export default function Home() {
+export const metadata = {
+  title: "Wealthkit - Smart Financial Tools",
+  description:
+    "All the tools you need to manage your money and build wealth effectively.",
+  openGraph: {
+    description:
+      "All the tools you need to manage your money and build wealth effectively.",
+  },
+  twitter: {
+    creator: "@jrib_",
+  },
+};
+
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="bg-gradient-to-b from-slate-800 to-slate-950 min-h-screen flex flex-col">
+      <Header />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <main className="flex-1 container mx-auto px-4">
+        <div className="text-center max-w-4xl mx-auto pt-16 pb-24">
+          <h1 className="text-4xl md:text-7xl font-light mb-6 text-white leading-tight">
+            All the tools for managing your{" "}
+            <span className="relative">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-light to-brand-default">
+                money
+              </span>
+            </span>
+          </h1>
+          <p className="text-gray-400 text-xl mb-12 max-w-2xl mx-auto">
+            Professional-grade financial tools to help you make smarter
+            decisions with your money
+          </p>
         </div>
+
+        <LinksGrid />
+        <FeatureGrid />
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <Footer />
     </div>
+  );
+}
+
+interface LinkCardProps {
+  name: string;
+  href: string;
+  description: string;
+  iconPath: string;
+  index: number;
+}
+
+function LinkCard({ name, href, description, iconPath, index }: LinkCardProps) {
+  return (
+    <Link
+      href={href}
+      className="card-animate block p-6 rounded-xl bg-slate-800/50 border border-slate-700
+        hover:border-brand-default hover:bg-slate-800/70 transition-all duration-300
+        group w-full hover:-translate-y-1"
+      style={{
+        animation: "slideUp 0.4s ease-out forwards",
+        animationDelay: `${index * 0.1}s`,
+        opacity: 0,
+      }}
+    >
+      <div className="flex items-start space-x-4">
+        <div
+          className="mb-4 w-12 h-12 rounded-lg bg-brand-default/10 flex items-center
+          justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
+        >
+          <svg
+            className="w-6 h-6 text-brand-default"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d={iconPath} />
+          </svg>
+        </div>
+        <div className="flex-1">
+          <h3 className="text-xl font-medium text-white mb-2">{name}</h3>
+          <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+const links = [
+  {
+    name: "Growth Calculator",
+    href: "growth-calculator",
+    description: "Project your investment growth with our powerful calculator",
+    iconPath: "M23 6l-9.5 9.5-5-5L1 18 M17 6h6v6",
+  },
+  {
+    name: "Budget",
+    href: "budget",
+    description: "Create and manage your personal budget with ease",
+    iconPath: "M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6",
+  },
+  {
+    name: "Portfolio Builder",
+    href: "portfolio-builder",
+    description: "Design and optimize your investment portfolio",
+    iconPath: "M21 3v18M3 9h18M3 15h18M3 9a6 6 0 0 1 6-6M3 15a6 6 0 0 0 6 6",
+  },
+  {
+    name: "Personal Tax Calculator",
+    href: "personal-tax-calculator",
+    description: "Estimate your tax obligations and plan accordingly",
+    iconPath:
+      "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
+  },
+  {
+    name: "Drawdown Calculator",
+    href: "drawdown-calculator",
+    description: "Plan your retirement withdrawals strategically",
+    iconPath: "M21 12a9 9 0 1 1-6.219-8.56 M12 8v4l2.5 2.5",
+  },
+] as const;
+
+export function LinksGrid() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto pb-24">
+      {links.map((link, i) => (
+        <LinkCard key={link.href} {...link} index={i} />
+      ))}
+    </div>
+  );
+}
+
+const features = [
+  {
+    title: "Easy to Use",
+    description:
+      "Intuitive interfaces designed for both beginners and professionals",
+    iconPath: "M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6",
+  },
+  {
+    title: "Real-time Calculations",
+    description: "Instant results with professional-grade accuracy",
+    iconPath: "M21 12a9 9 0 1 1-6.219-8.56 M12 8v4l2.5 2.5",
+  },
+  {
+    title: "Secure & Private",
+    description: "Your financial data stays in your browser",
+    iconPath: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
+  },
+] as const;
+
+function FeatureGrid() {
+  return (
+    <div className="max-w-6xl mx-auto pb-24">
+      <div className="grid md:grid-cols-3 gap-8 text-center">
+        {features.map((feature) => (
+          <div key={feature.title} className="p-6">
+            <div className="w-12 h-12 rounded-lg bg-brand-default/10 flex items-center justify-center mx-auto mb-4">
+              <Icon
+                path={feature.iconPath}
+                className="w-6 h-6 text-brand-default"
+              />
+            </div>
+            <h3 className="text-lg font-medium text-white mb-2">
+              {feature.title}
+            </h3>
+            <p className="text-gray-400 text-sm">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface IconProps {
+  path: string;
+  className?: string;
+}
+
+function Icon({ path, className = "" }: IconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={path} />
+    </svg>
   );
 }
