@@ -26,9 +26,14 @@ export const formatAsCurrency = (
 };
 // Parse currency string to number
 export const parseCurrency = (value: string): number => {
-  // Remove all non-numeric characters except decimal point
-  const cleanValue = value.replace(/[$,]/g, "");
-  const parsed = parseFloat(cleanValue);
+  // Remove all non-numeric characters except decimal point and minus sign
+  const cleanValue = value.replace(/[^0-9.-]/g, "");
+
+  // Handle multiple decimal points - keep only the first one
+  const parts = cleanValue.split(".");
+  const sanitized = parts[0] + (parts.length > 1 ? "." + parts[1] : "");
+
+  const parsed = parseFloat(sanitized);
   return isNaN(parsed) ? 0 : parsed;
 };
 

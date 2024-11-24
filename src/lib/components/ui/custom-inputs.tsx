@@ -38,17 +38,29 @@ export function CurrencyInput({
   id,
 }: CurrencyInputProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const [inputValue, setInputValue] = useState(value.toFixed(2));
 
-  // When not editing, show formatted value
-  // When editing, show raw number
-  const displayValue = isEditing ? value.toString() : formatAsCurrency(value);
+  const displayValue = isEditing ? inputValue : formatAsCurrency(value, true);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const numericValue = parseCurrency(event.target.value);
-    // Only update if it's a valid number
+    const newValue = event.target.value;
+    // Allow raw typing - only clean on blur
+    setInputValue(newValue);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    const numericValue = parseCurrency(inputValue);
     if (!isNaN(numericValue)) {
       onChange(numericValue);
+      setInputValue(numericValue.toFixed(2));
     }
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsEditing(true);
+    setInputValue(value.toFixed(2));
+    e.currentTarget.select();
   };
 
   return (
@@ -59,16 +71,12 @@ export function CurrencyInput({
         name={id}
         value={displayValue}
         onChange={handleInput}
-        onFocus={(e) => {
-          setIsEditing(true);
-          e.currentTarget.select();
-        }}
-        onBlur={() => setIsEditing(false)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
     </div>
   );
 }
-
 // Frequency Select Component
 interface FrequencySelectProps {
   value: FrequencyType;

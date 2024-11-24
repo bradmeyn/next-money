@@ -8,6 +8,7 @@ import { Card } from "@/lib/components/ui/card";
 import CategoryChart from "./_components/CategoryChart";
 import { FrequencySelect } from "@/lib/components/ui/custom-inputs";
 import { BudgetProvider } from "./BudgetContext";
+import BreakdownChart from "./_components/BreakdownChart";
 export default function BudgetBuilderPage() {
   const budget = useBudget();
 
@@ -67,13 +68,29 @@ export default function BudgetBuilderPage() {
             </BudgetCard>
           </div>
 
-          <Card className="flex-1 p-8 max-w-[400px]">
-            <h2 className="text-blue-300 font-semibold">Category Breakdown</h2>
-            <CategoryChart
-              chartData={expenseByCategory}
-              total={totalExpenses}
-            />
-          </Card>
+          <div className="space-y-4">
+            <Card className="flex-1 p-8 max-w-[400px]">
+              <h2 className="text-blue-300 font-semibold">
+                Category Breakdown
+              </h2>
+              <CategoryChart
+                frequency={frequency}
+                chartData={expenseByCategory}
+                total={totalExpenses}
+              />
+            </Card>
+
+            <Card className="flex-1 p-8 max-w-[400px] ">
+              <h2 className="text-blue-300 font-semibold">Savings Rate</h2>
+              <BreakdownChart
+                chartData={{
+                  income: totalIncome,
+                  expenses: totalExpenses,
+                  savings: totalSavings,
+                }}
+              />
+            </Card>
+          </div>
         </div>
       </BudgetProvider>
     </main>
